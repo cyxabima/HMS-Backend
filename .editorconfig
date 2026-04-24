@@ -1,0 +1,19 @@
+root = true
+
+[*]
+# Use 2 spaces for consistent nesting in your specialized logic
+indent_style = space
+indent_size = 2
+
+# Standard Unix line endings for Node 24 compatibility
+end_of_line = lf
+charset = utf-8
+
+# Clean up trailing whitespace automatically
+trim_trailing_whitespace = true
+
+# Ensure every file ends with a newline (POSIX standard)
+insert_final_newline = true
+
+[*.md]
+trim_trailing_whitespace = false
