@@ -1,0 +1,27 @@
+import { decimal, pgEnum, pgTable, timestamp, uuid, varchar } from "drizzle-orm/pg-core";
+import { roomTransactions } from "./transactions.js";
+import { patients } from "./patients-and-users.js";
+
+export const roomStatusEnum = pgEnum("room_status", ["AVAILABLE", "OCCUPIED", "UNDER_MAINTENANCE", "CLEANING"]);
+
+export const rooms = pgTable("rooms", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  roomNumber: varchar("room_number", { length: 20 }).unique().notNull(),
+  roomType: varchar("room_type", { length: 50 }).notNull(),
+  pricePerHour: decimal("price_per_day", { precision: 10, scale: 2 }).notNull(),
+  status: roomStatusEnum("status").default("AVAILABLE").notNull(),
+  lastCleanedAt: timestamp("last_cleaned_at"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+export const roomBooking = pgTable("room_booking", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  transactionId: uuid("transaction_id").references(() => roomTransactions.transactionId).notNull(),
+  roomId: uuid("room_id").references(() => rooms.id).notNull(),
+  patientId: uuid("patient_id").references(() => patients.id).notNull(),
+
+  checkIn: timestamp("check_in").defaultNow().notNull(),
+  checkOut: timestamp("check_out"), // Null until the patient is discharged
+
+  status: varchar("status", { length: 20 }).default("ACTIVE"),
+});

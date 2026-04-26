@@ -1,6 +1,7 @@
 import { pgTable, uuid, varchar, text, timestamp, decimal, pgEnum, integer, boolean } from "drizzle-orm/pg-core";
 import { patients, users } from "./patients-and-users.js";
 import { doctors, services } from "./doctor-and-service.js";
+import { rooms } from "./rooms.js";
 
 export const txnTypeEnum = pgEnum("txn_type", ["SERVICE", "DOCTOR", "ROOM"]);
 
@@ -26,3 +27,8 @@ export const serviceTransactions = pgTable("service_transactions", {
 });
 
 // remember the doctor and service transacation is not dijoint it is overlapping btw
+
+export const roomTransactions = pgTable("room_transactions", {
+  transactionId: uuid("transaction_id").primaryKey().references(() => transactions.id, { onDelete: "cascade" }),
+  roomId: uuid("room_id").references(() => rooms.id).notNull(),
+});
