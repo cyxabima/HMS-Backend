@@ -7,6 +7,8 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import { db } from "./db/db.js";
 import { testUsersTable } from "./db/schema/test-user.js";
+import { errorHandler } from "./middlewares/error.middleware.js";
+import userRouter from "./routes/user.router.js";
 
 const corsOptions = {
   origin: ["http://localhost:3000", "*"],
@@ -21,6 +23,9 @@ app.use(express.urlencoded({ extended: true, limit: "16kb" }));
 app.use(cookieParser());
 app.use(cors(corsOptions));
 
+
+app.use("/api/v1/users", userRouter);
+
 app.get("/healthz", async (_: Request, res: Response) => {
   const testUser = await db.select().from(testUsersTable);
 
@@ -33,5 +38,7 @@ app.get("/healthz", async (_: Request, res: Response) => {
 
   return res.status(200).json(healthData);
 });
+
+app.use(errorHandler)
 
 export default app;

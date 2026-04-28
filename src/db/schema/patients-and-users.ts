@@ -1,6 +1,20 @@
-import { pgTable, uuid, varchar, text, timestamp, pgEnum } from "drizzle-orm/pg-core";
+import {
+  pgTable,
+  uuid,
+  varchar,
+  text,
+  timestamp,
+  pgEnum,
+} from "drizzle-orm/pg-core";
 
-export const roleEnum = pgEnum("user_role", ["ADMIN", "DOCTOR", "RECEPTIONIST", "OPD_OPERATOR", "MANAGMENT", "ACCOUNTANT"]);
+export const roleEnum = pgEnum("user_role", [
+  "ADMIN",
+  "DOCTOR",
+  "RECEPTIONIST",
+  "OPD_OPERATOR",
+  "MANAGMENT",
+  "ACCOUNTANT",
+]);
 export const genderEnum = pgEnum("gender", ["MALE", "FEMALE", "OTHER"]);
 
 export const users = pgTable("users", {

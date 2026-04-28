@@ -1,6 +1,6 @@
 {
-  "id": "c5fcfc38-99e5-4d79-b52a-5989fce6a2e6",
-  "prevId": "fedc906c-fd9a-4217-a5c8-1f3079cb1d58",
+  "id": "c18de93d-852c-43cd-af14-9ffa3b967d4f",
+  "prevId": "c5fcfc38-99e5-4d79-b52a-5989fce6a2e6",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -426,6 +426,157 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
+    "public.room_booking": {
+      "name": "room_booking",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "transaction_id": {
+          "name": "transaction_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "room_id": {
+          "name": "room_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "patient_id": {
+          "name": "patient_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "check_in": {
+          "name": "check_in",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "check_out": {
+          "name": "check_out",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "status": {
+          "name": "status",
+          "type": "varchar(20)",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'ACTIVE'"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "room_booking_transaction_id_room_transactions_transaction_id_fk": {
+          "name": "room_booking_transaction_id_room_transactions_transaction_id_fk",
+          "tableFrom": "room_booking",
+          "tableTo": "room_transactions",
+          "columnsFrom": ["transaction_id"],
+          "columnsTo": ["transaction_id"],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "room_booking_room_id_rooms_id_fk": {
+          "name": "room_booking_room_id_rooms_id_fk",
+          "tableFrom": "room_booking",
+          "tableTo": "rooms",
+          "columnsFrom": ["room_id"],
+          "columnsTo": ["id"],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "room_booking_patient_id_patients_id_fk": {
+          "name": "room_booking_patient_id_patients_id_fk",
+          "tableFrom": "room_booking",
+          "tableTo": "patients",
+          "columnsFrom": ["patient_id"],
+          "columnsTo": ["id"],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.rooms": {
+      "name": "rooms",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "room_number": {
+          "name": "room_number",
+          "type": "varchar(20)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "room_type": {
+          "name": "room_type",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "price_per_day": {
+          "name": "price_per_day",
+          "type": "numeric(10, 2)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "status": {
+          "name": "status",
+          "type": "room_status",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'AVAILABLE'"
+        },
+        "last_cleaned_at": {
+          "name": "last_cleaned_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "rooms_room_number_unique": {
+          "name": "rooms_room_number_unique",
+          "nullsNotDistinct": false,
+          "columns": ["room_number"]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
     "public.doctor_transactions": {
       "name": "doctor_transactions",
       "schema": "",
@@ -459,6 +610,50 @@
           "tableFrom": "doctor_transactions",
           "tableTo": "doctors",
           "columnsFrom": ["doctor_id"],
+          "columnsTo": ["id"],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.room_transactions": {
+      "name": "room_transactions",
+      "schema": "",
+      "columns": {
+        "transaction_id": {
+          "name": "transaction_id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "room_id": {
+          "name": "room_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "room_transactions_transaction_id_transactions_id_fk": {
+          "name": "room_transactions_transaction_id_transactions_id_fk",
+          "tableFrom": "room_transactions",
+          "tableTo": "transactions",
+          "columnsFrom": ["transaction_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "room_transactions_room_id_rooms_id_fk": {
+          "name": "room_transactions_room_id_rooms_id_fk",
+          "tableFrom": "room_transactions",
+          "tableTo": "rooms",
+          "columnsFrom": ["room_id"],
           "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
@@ -633,6 +828,11 @@
         "MANAGMENT",
         "ACCOUNTANT"
       ]
+    },
+    "public.room_status": {
+      "name": "room_status",
+      "schema": "public",
+      "values": ["AVAILABLE", "OCCUPIED", "UNDER_MAINTENANCE", "CLEANING"]
     },
     "public.txn_type": {
       "name": "txn_type",

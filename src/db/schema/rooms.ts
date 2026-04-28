@@ -1,8 +1,20 @@
-import { decimal, pgEnum, pgTable, timestamp, uuid, varchar } from "drizzle-orm/pg-core";
+import {
+  decimal,
+  pgEnum,
+  pgTable,
+  timestamp,
+  uuid,
+  varchar,
+} from "drizzle-orm/pg-core";
 import { roomTransactions } from "./transactions.js";
 import { patients } from "./patients-and-users.js";
 
-export const roomStatusEnum = pgEnum("room_status", ["AVAILABLE", "OCCUPIED", "UNDER_MAINTENANCE", "CLEANING"]);
+export const roomStatusEnum = pgEnum("room_status", [
+  "AVAILABLE",
+  "OCCUPIED",
+  "UNDER_MAINTENANCE",
+  "CLEANING",
+]);
 
 export const rooms = pgTable("rooms", {
   id: uuid("id").primaryKey().defaultRandom(),
@@ -16,9 +28,15 @@ export const rooms = pgTable("rooms", {
 
 export const roomBooking = pgTable("room_booking", {
   id: uuid("id").primaryKey().defaultRandom(),
-  transactionId: uuid("transaction_id").references(() => roomTransactions.transactionId).notNull(),
-  roomId: uuid("room_id").references(() => rooms.id).notNull(),
-  patientId: uuid("patient_id").references(() => patients.id).notNull(),
+  transactionId: uuid("transaction_id")
+    .references(() => roomTransactions.transactionId)
+    .notNull(),
+  roomId: uuid("room_id")
+    .references(() => rooms.id)
+    .notNull(),
+  patientId: uuid("patient_id")
+    .references(() => patients.id)
+    .notNull(),
 
   checkIn: timestamp("check_in").defaultNow().notNull(),
   checkOut: timestamp("check_out"), // Null until the patient is discharged

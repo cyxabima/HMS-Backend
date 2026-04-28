@@ -51,9 +51,7 @@
         "test_users_email_unique": {
           "name": "test_users_email_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "email"
-          ]
+          "columns": ["email"]
         }
       },
       "policies": {},
@@ -141,16 +139,12 @@
         "patients_mr_number_unique": {
           "name": "patients_mr_number_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "mr_number"
-          ]
+          "columns": ["mr_number"]
         },
         "patients_cnic_unique": {
           "name": "patients_cnic_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "cnic"
-          ]
+          "columns": ["cnic"]
         }
       },
       "policies": {},
@@ -208,9 +202,7 @@
         "users_email_unique": {
           "name": "users_email_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "email"
-          ]
+          "columns": ["email"]
         }
       },
       "policies": {},
@@ -222,11 +214,7 @@
     "public.gender": {
       "name": "gender",
       "schema": "public",
-      "values": [
-        "MALE",
-        "FEMALE",
-        "OTHER"
-      ]
+      "values": ["MALE", "FEMALE", "OTHER"]
     },
     "public.user_role": {
       "name": "user_role",

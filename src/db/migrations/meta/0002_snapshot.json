@@ -68,12 +68,8 @@
           "name": "doctor_timings_doctor_id_doctors_id_fk",
           "tableFrom": "doctor_timings",
           "tableTo": "doctors",
-          "columnsFrom": [
-            "doctor_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["doctor_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -170,9 +166,7 @@
         "service_types_name_unique": {
           "name": "service_types_name_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "name"
-          ]
+          "columns": ["name"]
         }
       },
       "policies": {},
@@ -215,12 +209,8 @@
           "name": "services_service_type_id_service_types_id_fk",
           "tableFrom": "services",
           "tableTo": "service_types",
-          "columnsFrom": [
-            "service_type_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["service_type_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -278,9 +268,7 @@
         "test_users_email_unique": {
           "name": "test_users_email_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "email"
-          ]
+          "columns": ["email"]
         }
       },
       "policies": {},
@@ -368,16 +356,12 @@
         "patients_mr_number_unique": {
           "name": "patients_mr_number_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "mr_number"
-          ]
+          "columns": ["mr_number"]
         },
         "patients_cnic_unique": {
           "name": "patients_cnic_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "cnic"
-          ]
+          "columns": ["cnic"]
         }
       },
       "policies": {},
@@ -435,9 +419,7 @@
         "users_email_unique": {
           "name": "users_email_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "email"
-          ]
+          "columns": ["email"]
         }
       },
       "policies": {},
@@ -462,20 +444,12 @@
     "public.doctor_involvement": {
       "name": "doctor_involvement",
       "schema": "public",
-      "values": [
-        "YES",
-        "NO",
-        "PARTIAL"
-      ]
+      "values": ["YES", "NO", "PARTIAL"]
     },
     "public.gender": {
       "name": "gender",
       "schema": "public",
-      "values": [
-        "MALE",
-        "FEMALE",
-        "OTHER"
-      ]
+      "values": ["MALE", "FEMALE", "OTHER"]
     },
     "public.user_role": {
       "name": "user_role",
