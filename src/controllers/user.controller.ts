@@ -3,7 +3,7 @@ import { db } from "../db/db.js";
 import ApiError from "../utils/api-error.js";
 import { users } from "../db/schema/patients-and-users.js";
 import { eq } from "drizzle-orm";
-import type { safeUser, UserLoginResponse } from "../types/types.js";
+import type { SafeUser, UserLoginResponse } from "../types/types.js";
 import ApiResponse from "../utils/api-response.js";
 import { compare, hash } from "bcryptjs";
 import jwt from "jsonwebtoken";
@@ -53,7 +53,7 @@ export const registerUser = async (
     return res
       .status(201)
       .json(
-        new ApiResponse<safeUser>(
+        new ApiResponse<SafeUser>(
           201,
           safeUser,
           "User registered successfully",
