@@ -124,11 +124,25 @@ export const loginUser = async (
 };
 
 export const logoutUser = async (
-  req: Request,
+  _: Request,
   res: Response,
   next: NextFunction,
 ) => {
   try {
+
+    const cookieOptions = {
+      httpOnly: true,
+      secure: true,
+      sameSite: "strict" as const,
+    };
+
+    // these are the powerful http header for clearing data of the origin also i donot know it work on http or just on https
+    res.setHeader("Clear-Site-Data", '"cache", "cookies", "storage"');
+
+    return res
+      .status(200)
+      .clearCookie("accessToken", cookieOptions)
+      .json(new ApiResponse(200, null, "User logged out successfully"));
   } catch (error) {
     return next(error);
   }

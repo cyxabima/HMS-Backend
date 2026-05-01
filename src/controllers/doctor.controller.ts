@@ -82,7 +82,7 @@ export const addDoctorTiming = async (
         "Start time must be before end time.",
       );
     }
-
+    // TODO: check doctor id is real or not
     const [newTiming] = await db
       .insert(doctorTimings)
       .values({
