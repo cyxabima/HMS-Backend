@@ -9,12 +9,7 @@ import { authorizeRoles } from "../middlewares/role-handler.middleware.js";
 
 const userRouter: Router = Router();
 
-userRouter.post(
-  "/",
-  verifyJwt,
-  authorizeRoles(["ADMIN"]),
-  registerUser,
-);
+userRouter.post("/", verifyJwt, authorizeRoles(["ADMIN"]), registerUser);
 userRouter.post("/login", loginUser);
 userRouter.get("/logout", verifyJwt, logoutUser);
 

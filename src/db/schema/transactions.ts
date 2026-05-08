@@ -2,16 +2,14 @@ import {
   pgTable,
   uuid,
   varchar,
-  text,
   timestamp,
   decimal,
   pgEnum,
-  integer,
-  boolean,
 } from "drizzle-orm/pg-core";
 import { patients, users } from "./patients-and-users.js";
 import { doctors, services } from "./doctor-and-service.js";
 import { rooms } from "./rooms.js";
+import { invoices } from "./invoice-and-payment.js";
 
 export const txnTypeEnum = pgEnum("txn_type", ["SERVICE", "DOCTOR", "ROOM"]);
 
@@ -23,6 +21,9 @@ export const transactions = pgTable("transactions", {
     .notNull(),
   userId: uuid("user_id")
     .references(() => users.id)
+    .notNull(),
+  invoiceId: uuid("invoice_id")
+    .references(() => invoices.id)
     .notNull(),
   type: txnTypeEnum("type").notNull(),
   amount: decimal("amount", { precision: 12, scale: 2 }).notNull(),
@@ -48,7 +49,7 @@ export const serviceTransactions = pgTable("service_transactions", {
     .notNull(),
 });
 
-// currently all transations are disjoint
+// NOTE: currently all transations are disjoint
 
 export const roomTransactions = pgTable("room_transactions", {
   transactionId: uuid("transaction_id")

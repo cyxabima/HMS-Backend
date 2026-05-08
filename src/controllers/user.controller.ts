@@ -129,7 +129,6 @@ export const logoutUser = async (
   next: NextFunction,
 ) => {
   try {
-
     const cookieOptions = {
       httpOnly: true,
       secure: true,

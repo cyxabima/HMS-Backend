@@ -169,6 +169,7 @@ export const getAllDoctorsWithTimings = async (
   next: NextFunction,
 ) => {
   try {
+    // NOTE: there is a difference in db.select and db.query query is a relation api of drizzle
     const allDoctors = (await db.query.doctors.findMany({
       with: { timings: true },
     })) as DoctorWithTimings[];

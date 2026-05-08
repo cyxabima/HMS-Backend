@@ -3,6 +3,7 @@ import {
   createPatient,
   getPatients,
   getPatientStats,
+  getPatientTimeline,
 } from "../controllers/patient.controller.js";
 import verifyJwt from "../middlewares/auth.middleware.js";
 import { authorizeRoles } from "../middlewares/role-handler.middleware.js";
@@ -14,19 +15,32 @@ patientRouter.use(verifyJwt);
 patientRouter.get(
   "/stats",
   authorizeRoles(["ADMIN", "MANAGMENT"]),
-  getPatientStats
+  getPatientStats,
 );
 
 patientRouter.get(
   "/",
-  authorizeRoles(["ADMIN", "RECEPTIONIST", "OPD_OPERATOR", "MANAGMENT", "DOCTOR"]),
-  getPatients
+  authorizeRoles([
+    "ADMIN",
+    "RECEPTIONIST",
+    "OPD_OPERATOR",
+    "MANAGMENT",
+    "DOCTOR",
+  ]),
+  getPatients,
 );
 
 patientRouter.post(
   "/",
   authorizeRoles(["ADMIN", "RECEPTIONIST", "OPD_OPERATOR"]),
-  createPatient
+  createPatient,
 );
+
+patientRouter.get(
+  "/:id/timeline",
+  authorizeRoles(["ADMIN"]),
+  getPatientTimeline,
+);
+
 
 export default patientRouter;
