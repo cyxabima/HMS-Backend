@@ -48,7 +48,7 @@ export const serviceTransactions = pgTable("service_transactions", {
     .notNull(),
 });
 
-// remember the doctor and service transacation is not dijoint it is overlapping btw
+// currently all transations are disjoint
 
 export const roomTransactions = pgTable("room_transactions", {
   transactionId: uuid("transaction_id")

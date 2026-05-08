@@ -28,9 +28,9 @@ export const rooms = pgTable("rooms", {
 
 export const roomBooking = pgTable("room_booking", {
   id: uuid("id").primaryKey().defaultRandom(),
-  transactionId: uuid("transaction_id")
-    .references(() => roomTransactions.transactionId)
-    .notNull(),
+  // transactionId: uuid("transaction_id")
+  //  .references(() => roomTransactions.transactionId)
+  // .notNull(), // i think this could be null is put in trnsation only when check out
   roomId: uuid("room_id")
     .references(() => rooms.id)
     .notNull(),
@@ -43,3 +43,4 @@ export const roomBooking = pgTable("room_booking", {
 
   status: varchar("status", { length: 20 }).default("ACTIVE"),
 });
+// NOTE:  it seems like room transactions and room booking are same room but they are not room booking keep track of everything it get added on transaction only when checkout
